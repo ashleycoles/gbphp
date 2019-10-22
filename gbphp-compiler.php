@@ -16,7 +16,7 @@ function runCompile($config) {
     }
     $files = loadFiles($config);
 
-    foreach($files as $file) {
+    foreach ($files as $file) {
         compile($file, $config);
     }
 }
@@ -61,9 +61,11 @@ function replace(&$ephpContents) {
         'break'             => 'splendid',
         'try'               => 'would_you_mind',
         'catch'             => 'actually_i_do_mind',
-        'die'               => 'cheerio',
+        'die'               => 'perish',
         'exit'              => 'brexit',
         'Exception'         => 'Wobbly',
+        'foreach'           => 'merry_go_round',
+        'for each'           => 'merry_go_round',
         // OO
         'class'             => 'upper_class',
         'public'            => 'state',
@@ -99,13 +101,12 @@ function replace(&$ephpContents) {
  * @return array
  */
 function loadFiles($config) {
-    $it = new RecursiveDirectoryIterator($config->input_dir);
-    $display = ['gbphp'];
+    $iterator = new RecursiveDirectoryIterator($config->input_dir);
     $files = [];
-    foreach (new RecursiveIteratorIterator($it) as $file)
+    foreach (new RecursiveIteratorIterator($iterator) as $file)
     {
         $file_bits = explode('.', $file);
-        if (in_array(strtolower(array_pop($file_bits)), $display)) {
+        if (in_array(strtolower(array_pop($file_bits)), ['gbphp'])) {
             $files[] = $file->getPathname();
         }
     }
