@@ -4,6 +4,8 @@ PHP the way god intended.
 
 A simple 'compiler' that converts GBPHP (Great British PHP) into vanilla PHP.
 
+Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/blog/if-php-were-british)
+
 ## Installation
 
 1) Put the kettle on
