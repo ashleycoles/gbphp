@@ -18,6 +18,15 @@ Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/b
 
 ## Language Usage Examples
 
+- [Variables](#variables)
+- [If statements](#if-statements)
+- [Switches](#switches)
+- [Foreach loops](#foreach-loops)
+- [Try/Catch blocks](#trycatch-blocks)
+- [Classes](#classes)
+- [Super globals](#super-globals)
+- [Misc](#misc)
+
 ### Variables
 
 ##### PHP
