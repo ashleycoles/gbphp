@@ -4,12 +4,17 @@ $config = loadConfig();
 
 runCompile($config);
 
+/**
+ * Runs the compiler
+ *
+ * @param $config
+ */
 function runCompile($config) {
     if (!$config) {
         echo 'No config provided';
         exit;
     }
-    $files = rglob('*.gbphp');
+    $files = loadFiles($config);
 
     foreach($files as $file) {
         compile($file, $config);
@@ -24,7 +29,7 @@ function runCompile($config) {
 function compile($filepath, $config) {
     $inputFileInfo = pathinfo($filepath);
     $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
-    $outputFilePath = str_replace('/' . $config->input_dir, $config->output_dir, $outputFilePath);
+    $outputFilePath = str_replace($config->input_dir, $config->output_dir, $outputFilePath);
 
     $outputFileInfo = pathinfo($outputFilePath);
 
@@ -88,16 +93,21 @@ function replace(&$ephpContents) {
 }
 
 /**
- * Recursive glob
+ * Load all gbphp files in the input directory
  *
- * @param $pattern
- * @param int $flags
- * @return array|false
+ * @param $config
+ * @return array
  */
-function rglob($pattern, $flags = 0) {
-    $files = glob($pattern, $flags);
-    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-        $files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
+function loadFiles($config) {
+    $it = new RecursiveDirectoryIterator($config->input_dir);
+    $display = ['gbphp'];
+    $files = [];
+    foreach (new RecursiveIteratorIterator($it) as $file)
+    {
+        $file_bits = explode('.', $file);
+        if (in_array(strtolower(array_pop($file_bits)), $display)) {
+            $files[] = $file->getPathname();
+        }
     }
     return $files;
 }
