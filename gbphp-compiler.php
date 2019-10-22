@@ -1,12 +1,18 @@
 <?php
 
-runCompile();
+$config = loadConfig();
 
-function runCompile() {
+runCompile($config);
+
+function runCompile($config) {
+    if (!$config) {
+        echo 'No config provided';
+        exit;
+    }
     $files = rglob('*.gbphp');
 
     foreach($files as $file) {
-        compile($file);
+        compile($file, $config);
     }
 }
 
@@ -15,9 +21,11 @@ function runCompile() {
  *
  * @param $filepath
  */
-function compile($filepath) {
+function compile($filepath, $config) {
     $inputFileInfo = pathinfo($filepath);
-    $outputFilePath = 'test' . str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+    $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+    $outputFilePath = str_replace('/' . $config->input_dir, $config->output_dir, $outputFilePath);
+
     $outputFileInfo = pathinfo($outputFilePath);
 
     $fileContents = htmlspecialchars(file_get_contents($filepath));
@@ -108,4 +116,21 @@ function str_replace_outside_quotes($replace, $with, $string){
     while ($outside)
         $result .= str_replace($replace,$with,array_shift($outside)).array_shift($outside);
     return $result;
+}
+
+/**
+ * Loads GBPHP config from json file
+ *
+ * @return JSON Object
+ */
+function loadConfig() {
+    $configName = 'gbphp-config.json';
+
+    if (!file_exists($configName)) {
+        return false;
+    }
+
+    $jsonString = file_get_contents($configName);
+    $config = json_decode($jsonString);
+    return $config;
 }
