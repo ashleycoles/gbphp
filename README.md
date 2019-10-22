@@ -18,9 +18,21 @@ Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/b
 
 ## Language Usage Examples
 
-#### Vanilla PHP
+### Variables
+
+##### PHP
 ```php
-<?php
+$variable = 'Hello World';
+```
+
+##### GBPHP
+```php
+£variable = 'Hello World';
+```
+### If statements
+
+##### PHP
+```php
 if ($name == 'Ash') {
     echo 'Hi' . $name;
 } else {
@@ -28,9 +40,8 @@ if ($name == 'Ash') {
 }
 ```
 
-#### GBPHP
+##### GBPHP
 ```php
-<?gbphp
 perchance ($name == 'Ash') {
     announce 'Hi' . £name;
 } otherwise {
@@ -38,9 +49,10 @@ perchance ($name == 'Ash') {
 }
 ```
 
-#### Vanilla PHP
+### Switches
+
+##### Vanilla PHP
 ```php
-<?php
 switch ($name) {
     case 'Ash':
         echo 'Hi Ash';
@@ -54,9 +66,8 @@ switch ($name) {
 }
 ```
 
-#### GBPHP
+##### GBPHP
 ```php
-<?gbphp
 what_about (£name) {
     perhaps 'Ash':
         announce 'Hi Ash';
@@ -68,4 +79,92 @@ what_about (£name) {
         throw new Wobbly('Who the hell are you!');
         splendid;
 }
+```
+
+### Foreach loops
+
+##### PHP
+```php
+foreach (['a', 'b', 'c'] as $item) {
+    echo $item;
+}
+```
+
+##### GBPHP
+```php
+merry_go_round (['a', 'b', 'c'] as £item) {
+    announce £item;
+}
+```
+
+### Try/Catch blocks
+
+##### PHP
+```php
+try {
+    // Thingy
+} catch (Exception $error) {
+    echo $error->getMessage();
+}
+```
+
+##### GBPHP
+```php
+would_you_mind {
+    // Thingy
+} actually_i_do_mind(Wobbly £error) {
+    echo £error->getMessage();
+}
+```
+
+### Classes
+
+##### PHP
+```php
+class Example {
+    public $a;
+    private $b;
+    protected $c;
+}
+```
+
+##### GBPHP
+```php
+upper_class Example {
+    state £a;
+    private £b;
+    hereditary £c;
+}
+```
+
+### Super Globals
+
+##### PHP
+```php
+$_COOKIE
+$_POST
+$_SERVER
+```
+
+##### GBPHP
+```php
+£_BISCUIT
+£_ROYAL_MAIL
+£_BUTLER
+```
+
+### Misc
+
+##### PHP
+```php
+setcookie('name', 'content');
+die();
+exit();
+```
+
+##### GBPHP
+```php
+serve_biscuit('name', 'content');
+perish();
+brexit();
 ```
