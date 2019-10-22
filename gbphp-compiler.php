@@ -10,16 +10,22 @@ function runCompile() {
     }
 }
 
+/**
+ * Compile a given file
+ *
+ * @param $filepath
+ */
 function compile($filepath) {
     $inputFileInfo = pathinfo($filepath);
-    $outputFilePath = $inputFileInfo['dirname'] . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+    $outputFilePath = 'test' . str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+    $outputFileInfo = pathinfo($outputFilePath);
 
     $fileContents = htmlspecialchars(file_get_contents($filepath));
 
     replace($fileContents);
 
-    if (!is_dir($inputFileInfo['dirname'])) {
-        mkdir($inputFileInfo['dirname']);
+    if (!is_dir($outputFileInfo['dirname'])) {
+       mkdir($outputFileInfo['dirname']);
     }
 
     file_put_contents($outputFilePath, htmlspecialchars_decode($fileContents));
@@ -27,6 +33,7 @@ function compile($filepath) {
 
 /**
  * Replace GBPHP with filthy vanilla PHP
+ *
  * @param $ephpContents
  */
 function replace(&$ephpContents) {
