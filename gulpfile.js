@@ -4,8 +4,12 @@ var exec = require('child_process').exec
 
 gulp.task('compile-gbphp', function(cb) {
     exec('php gbphp-compiler.php', function (err, stdout, stderr) {
-        console.log(stdout)
-        console.log(stderr)
+        if (stdout) {
+            console.log(stdout)
+        }
+        if (stderr) {
+            console.log(stderr)
+        }
     })
     cb()
 })
