@@ -33,6 +33,50 @@ class GBPHPCompiler {
     protected $filesToCompile;
 
     /**
+     * Array of searches and replacements
+     *
+     * @var array
+     */
+    protected $replacements = [
+        '$'                 => '£',
+        'echo'              => 'announce',
+        'if'                => 'perchance',
+        'else'              => 'otherwise',
+        'switch'            => 'what_about',
+        'case'              => 'perhaps',
+        'default'           => 'on_the_off_chance',
+        'break'             => 'splendid',
+        'try'               => 'would_you_mind',
+        'catch'             => 'actually_i_do_mind',
+        'die'               => 'perish',
+        'exit'              => 'brexit',
+        'Exception'         => 'Wobbly',
+        'foreach'           => 'merry_go_round',
+        'for each'           => 'merry_go_round',
+        // OO
+        'class'             => 'upper_class',
+        'public'            => 'state',
+        'private'           => 'private',
+        'protected'         => 'hereditary',
+        // Built in functions
+        'str_replace'       => 'string_replace',
+        'is_int'            => 'is_integer',
+        'var_dump'          => 'variable_dump',
+        'preg_match'        => 'perl_regular_expression_match',
+        'json_encode'       => 'javascript_object_notation_encode',
+        'json_decode'       => 'javascript_object_notation_decode',
+        'mysql_connect'     => 'my_structured_query_language_connect',
+        'mysqli_connect'    => 'my_structured_query_language_improved_connect',
+        'setcookie'         => 'serve_biscuit',
+        // Globals
+        '_COOKIE'           => '_BISCUIT',
+        '_POST'             => '_ROYAL_MAIL',
+        '_SERVER'           => '_BUTLER',
+        // Other
+        'php'               => 'gbphp',
+    ];
+
+    /**
      * GBPHPCompiler constructor.
      *
      * @throws Exception
@@ -82,9 +126,7 @@ class GBPHPCompiler {
         if (!$this->config) {
             throw new Exception('Error: Config not loaded.');
         }
-
         $iterator = new RecursiveDirectoryIterator($this->config->input_dir);
-
         foreach (new RecursiveIteratorIterator($iterator) as $file)
         {
             $file_bits = explode('.', $file);
@@ -92,7 +134,6 @@ class GBPHPCompiler {
                 $this->filesToCompile[] = $file->getPathname();
             }
         }
-
         return $this;
     }
 
@@ -134,49 +175,9 @@ class GBPHPCompiler {
      */
     protected function replace(string &$gbphpContents)
     {
-        $replacements = [
-            '$'                 => '£',
-            'echo'              => 'announce',
-            'if'                => 'perchance',
-            'else'              => 'otherwise',
-            'switch'            => 'what_about',
-            'case'              => 'perhaps',
-            'default'           => 'on_the_off_chance',
-            'break'             => 'splendid',
-            'try'               => 'would_you_mind',
-            'catch'             => 'actually_i_do_mind',
-            'die'               => 'perish',
-            'exit'              => 'brexit',
-            'Exception'         => 'Wobbly',
-            'foreach'           => 'merry_go_round',
-            'for each'           => 'merry_go_round',
-            // OO
-            'class'             => 'upper_class',
-            'public'            => 'state',
-            'private'           => 'private',
-            'protected'         => 'hereditary',
-            // Built in functions
-            'str_replace'       => 'string_replace',
-            'is_int'            => 'is_integer',
-            'var_dump'          => 'variable_dump',
-            'preg_match'        => 'perl_regular_expression_match',
-            'json_encode'       => 'javascript_object_notation_encode',
-            'json_decode'       => 'javascript_object_notation_decode',
-            'mysql_connect'     => 'my_structured_query_language_connect',
-            'mysqli_connect'    => 'my_structured_query_language_improved_connect',
-            'setcookie'         => 'serve_biscuit',
-            // Globals
-            '_COOKIE'           => '_BISCUIT',
-            '_POST'             => '_ROYAL_MAIL',
-            '_SERVER'           => '_BUTLER',
-            // Other
-            'php'               => 'gbphp',
-        ];
-
-        foreach ($replacements as $replacement => $search) {
+        foreach ($this->replacements as $replacement => $search) {
             $gbphpContents = $this->stringReplaceOutsideQuotes($search, $replacement, $gbphpContents);
         }
-
         return $this;
     }
 
@@ -185,15 +186,15 @@ class GBPHPCompiler {
      *
      * @param string $search
      * @param string $replace
-     * @param string $source
+     * @param string $subject
      * @return string
      */
-    protected function stringReplaceOutsideQuotes(string $search,string $replace,string $source): string
+    protected function stringReplaceOutsideQuotes(string $search,string $replace,string $subject): string
     {
         $result = "";
-        $outside = preg_split('/("[^"]*"|\'[^\']*\')/',$source,-1,PREG_SPLIT_DELIM_CAPTURE);
+        $outside = preg_split('/("[^"]*"|\'[^\']*\')/', $subject, -1, PREG_SPLIT_DELIM_CAPTURE);
         while ($outside) {
-            $result .= str_replace($search,$replace,array_shift($outside)).array_shift($outside);
+            $result .= str_replace($search,$replace,array_shift($outside)) . array_shift($outside);
         }
         return $result;
     }
