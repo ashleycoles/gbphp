@@ -104,7 +104,13 @@ class GBPHPCompiler {
     protected function compile($filepath)
     {
         $inputFileInfo = pathinfo($filepath);
-        $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+
+        if (substr($filepath, 0, 3) !== '../') {
+            $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+        } else {
+            $outputFilePath = $inputFileInfo['dirname'] . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+        }
+
         $outputFilePath = str_replace($this->config->input_dir, $this->config->output_dir, $outputFilePath);
 
         $outputFileInfo = pathinfo($outputFilePath);
