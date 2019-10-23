@@ -52,11 +52,9 @@ class GBPHPCompiler {
         'exit'              => 'brexit',
         'Exception'         => 'Wobbly',
         'foreach'           => 'merry_go_round',
-        'for each'           => 'merry_go_round',
         // OO
         'class'             => 'upper_class',
         'public'            => 'state',
-        'private'           => 'private',
         'protected'         => 'hereditary',
         // Built in functions
         'str_replace'       => 'string_replace',
