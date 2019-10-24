@@ -31,27 +31,12 @@ Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/b
 
 ### Variables
 
-##### PHP
-```php
-$variable = 'Hello World';
-```
-
-##### GBPHP
 ```php
 £variable = 'Hello World';
 ```
+
 ### If statements
 
-##### PHP
-```php
-if ($name == 'Ash') {
-    echo 'Hi' . $name;
-} else {
-    echo 'Who are you??';
-}
-```
-
-##### GBPHP
 ```php
 perchance ($name == 'Ash') {
     announce 'Hi' . £name;
@@ -62,22 +47,6 @@ perchance ($name == 'Ash') {
 
 ### Switches
 
-##### Vanilla PHP
-```php
-switch ($name) {
-    case 'Ash':
-        echo 'Hi Ash';
-        break;
-    case 'Bex':
-        echo 'Hi Bex';
-        break;
-    default:
-        throw new Exception('Who the hell are you!');
-        break;
-}
-```
-
-##### GBPHP
 ```php
 what_about (£name) {
     perhaps 'Ash':
@@ -94,14 +63,6 @@ what_about (£name) {
 
 ### Foreach loops
 
-##### PHP
-```php
-foreach (['a', 'b', 'c'] as $item) {
-    echo $item;
-}
-```
-
-##### GBPHP
 ```php
 merry_go_round (['a', 'b', 'c'] as £item) {
     announce £item;
@@ -110,16 +71,6 @@ merry_go_round (['a', 'b', 'c'] as £item) {
 
 ### Try/Catch blocks
 
-##### PHP
-```php
-try {
-    // Thingy
-} catch (Exception $error) {
-    echo $error->getMessage();
-}
-```
-
-##### GBPHP
 ```php
 would_you_mind {
     // Thingy
@@ -130,16 +81,6 @@ would_you_mind {
 
 ### Classes
 
-##### PHP
-```php
-class Example {
-    public $a;
-    private $b;
-    protected $c;
-}
-```
-
-##### GBPHP
 ```php
 upper_class Example {
     state £a;
@@ -150,14 +91,6 @@ upper_class Example {
 
 ### Super Globals
 
-##### PHP
-```php
-$_COOKIE
-$_POST
-$_SERVER
-```
-
-##### GBPHP
 ```php
 £_BISCUIT
 £_ROYAL_MAIL
@@ -166,14 +99,6 @@ $_SERVER
 
 ### Misc
 
-##### PHP
-```php
-setcookie('name', 'content');
-die();
-exit();
-```
-
-##### GBPHP
 ```php
 serve_biscuit('name', 'content');
 perish();
