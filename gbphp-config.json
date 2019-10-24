@@ -1,5 +1,5 @@
 {
-  "compile_mode": "compile",
+  "compile_mode": "decompile",
   "compile": {
     "input_dir": "empire",
     "output_dir": "app"

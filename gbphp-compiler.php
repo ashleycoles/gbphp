@@ -24,9 +24,23 @@ class GBPHPCompiler {
     protected $configPath = 'gbphp-config.json';
 
     /**
+     * Holds the input file extension
+     *
+     * @var string
+     */
+    protected $inputFileType = 'gbphp';
+
+    /**
+     * Holds the output file extension
+     *
+     * @var string
+     */
+    protected $outputFileType = 'php';
+
+    /**
      * Holds the array of files due to be compiled.
      *
-     * @var Array
+     * @var array
      */
     protected $filesToCompile;
 
@@ -108,18 +122,21 @@ class GBPHPCompiler {
         $jsonString = file_get_contents($this->configPath);
         $config = json_decode($jsonString, true);
 
-        $compileMode = $config['compile_mode'];
-
-
-        $this->config['compile_mode'] = $compileMode;
+        $this->config['compile_mode'] = $config['compile_mode'];
         $this->config['input_dir'] = $config[$config['compile_mode']]['input_dir'];
         $this->config['output_dir'] = $config[$config['compile_mode']]['output_dir'];
+
+        if ($this->config['compile_mode'] == 'decompile') {
+            $this->replacements = array_flip($this->replacements);
+            $this->inputFileType = 'php';
+            $this->outFileType = 'gbphp';
+        }
 
         return $this;
     }
 
     /**
-     * Recurisve glob through specified input_dir to generate an array of .gbphp files to be compiled
+     * Recursive glob through specified input_dir to generate an array of files to be compiled
      *
      * @throws Exception
      */
@@ -129,10 +146,11 @@ class GBPHPCompiler {
             throw new Exception('Error: Config not loaded.');
         }
         $iterator = new RecursiveDirectoryIterator($this->config['input_dir']);
+
         foreach (new RecursiveIteratorIterator($iterator) as $file)
         {
             $file_bits = explode('.', $file);
-            if (in_array(strtolower(array_pop($file_bits)), ['gbphp'])) {
+            if (in_array(strtolower(array_pop($file_bits)), [$this->inputFileType])) {
                 $this->filesToCompile[] = $file->getPathname();
             }
         }
@@ -142,16 +160,16 @@ class GBPHPCompiler {
     /**
      * Run the compiler
      *
-     * @param $filepath string pointing to the .gbphp file due to be compiled.
+     * @param $filepath string pointing to the file due to be compiled.
      */
     protected function compile($filepath)
     {
         $inputFileInfo = pathinfo($filepath);
 
         if (substr($filepath, 0, 3) !== '../') {
-            $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+            $outputFilePath = str_replace('./', '/', $inputFileInfo['dirname']) . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.' . $this->outputFileType;
         } else {
-            $outputFilePath = $inputFileInfo['dirname'] . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
+            $outputFilePath = $inputFileInfo['dirname'] . DIRECTORY_SEPARATOR . $inputFileInfo['filename'];
         }
 
         $outputFilePath = str_replace($this->config['input_dir'], $this->config['output_dir'], $outputFilePath);
@@ -170,15 +188,15 @@ class GBPHPCompiler {
     }
 
     /**
-     * Runs search and replaces against a .gbphp to 'compile' raw PHP
+     * Runs search and replaces against a .gbphp/.php file to 'compile' raw PHP or 'decompile' into GBPHP
      *
-     * @param string $gbphpContents contents of a .gbphp file for compilation
+     * @param string $fileContents contents of a file for compilation
      * @return $this
      */
-    protected function replace(string &$gbphpContents)
+    protected function replace(string &$fileContents)
     {
         foreach ($this->replacements as $replacement => $search) {
-            $gbphpContents = $this->stringReplaceOutsideQuotes($search, $replacement, $gbphpContents);
+            $fileContents = $this->stringReplaceOutsideQuotes($search, $replacement, $fileContents);
         }
         return $this;
     }
