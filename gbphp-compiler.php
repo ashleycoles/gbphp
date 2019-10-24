@@ -12,8 +12,6 @@ class GBPHPCompiler {
     /**
      * Object holding compiler configuration options.
      *
-     * Properties are 'input_dir' and 'output_dir'
-     *
      * @var JSON Object
      */
     protected $config;
@@ -82,7 +80,6 @@ class GBPHPCompiler {
     public function __construct()
     {
         $this->loadConfig();
-
     }
 
     /**
@@ -109,7 +106,14 @@ class GBPHPCompiler {
         }
 
         $jsonString = file_get_contents($this->configPath);
-        $this->config = json_decode($jsonString);
+        $config = json_decode($jsonString, true);
+
+        $compileMode = $config['compile_mode'];
+
+
+        $this->config['compile_mode'] = $compileMode;
+        $this->config['input_dir'] = $config[$config['compile_mode']]['input_dir'];
+        $this->config['output_dir'] = $config[$config['compile_mode']]['output_dir'];
 
         return $this;
     }
@@ -124,7 +128,7 @@ class GBPHPCompiler {
         if (!$this->config) {
             throw new Exception('Error: Config not loaded.');
         }
-        $iterator = new RecursiveDirectoryIterator($this->config->input_dir);
+        $iterator = new RecursiveDirectoryIterator($this->config['input_dir']);
         foreach (new RecursiveIteratorIterator($iterator) as $file)
         {
             $file_bits = explode('.', $file);
@@ -150,7 +154,7 @@ class GBPHPCompiler {
             $outputFilePath = $inputFileInfo['dirname'] . DIRECTORY_SEPARATOR . $inputFileInfo['filename'] . '.php';
         }
 
-        $outputFilePath = str_replace($this->config->input_dir, $this->config->output_dir, $outputFilePath);
+        $outputFilePath = str_replace($this->config['input_dir'], $this->config['output_dir'], $outputFilePath);
 
         $outputFileInfo = pathinfo($outputFilePath);
 

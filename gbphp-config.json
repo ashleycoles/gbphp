@@ -1,4 +1,11 @@
 {
-  "input_dir": "empire",
-  "output_dir": "app"
+  "compile_mode": "compile",
+  "compile": {
+    "input_dir": "empire",
+    "output_dir": "app"
+  },
+  "decompile": {
+    "input_dir": "php",
+    "output_dir": "gbphp"
+  }
 }
