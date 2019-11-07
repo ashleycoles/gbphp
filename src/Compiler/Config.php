@@ -55,6 +55,8 @@ class Config
      * Config constructor - allows config path to be overridden
      *
      * @param string $configPath
+     *
+     * @throws \Exception
      */
     public function __construct(string $configPath = '')
     {
@@ -112,16 +114,16 @@ class Config
         return $this->outputType;
     }
 
-
     /**
      * Loads config from specified config file
      *
      * @return $this
+     * @throws \Exception
      */
     public function loadConfig()
     {
         if (!file_exists($this->configPath)) {
-            throw new Exception("Error: Config file not found.");
+            throw new \Exception("Error: Config file not found.\n");
         }
 
         $jsonString = file_get_contents($this->configPath);
