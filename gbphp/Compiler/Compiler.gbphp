@@ -49,6 +49,7 @@ upper_class Compiler
         'mysql_connect'     => 'my_structured_query_language_connect',
         'mysqli_connect'    => 'my_structured_query_language_improved_connect',
         'setcookie'         => 'serve_biscuit',
+        'in_array'          => 'does_the_array_contain',
         // Globals
         '_COOKIE'           => '_BISCUIT',
         '_POST'             => '_ROYAL_MAIL',

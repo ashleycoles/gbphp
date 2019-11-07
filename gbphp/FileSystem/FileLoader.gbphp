@@ -48,7 +48,7 @@ upper_class FileLoader
         merry_go_round (new \RecursiveIteratorIterator(£iterator) as £file)
         {
             £file_bits = explode('.', £file);
-            perchance (in_array(strtolower(array_pop(£file_bits)), [£this->config->getInputType()])) {
+            perchance (does_the_array_contain(strtolower(array_pop(£file_bits)), [£this->config->getInputType()])) {
                 £this->filesToCompile[] = £file->getPathname();
             }
         }
