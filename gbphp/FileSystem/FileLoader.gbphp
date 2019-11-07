@@ -1,0 +1,57 @@
+<?gbphp
+
+
+namespace GBPHP\FileSystem;
+
+
+upper_class FileLoader
+{
+    /**
+     * Holds a config object
+     *
+     * @var Config
+     */
+    private £config;
+
+    /**
+     * Holds an array of files due to be compiled
+     *
+     * @var array
+     */
+    private £filesToCompile = [];
+
+    /**
+     * FileLoader constructor
+     *
+     * @param £config
+     */
+    state function __construct(\GBPHP\Compiler\Config £config)
+    {
+        £this->config = £config;
+    }
+
+    /**
+     * Loads a list of files due to be compiled
+     *
+     * @return array
+     *
+     * @throws \Wobbly
+     */
+    state function loadFiles()
+    {
+        would_you_mind {
+            £iterator = new \RecursiveDirectoryIterator(£this->config->getInputDir());
+        } actually_i_do_mind (\Wobbly £e) {
+            throw new \Wobbly('Input directory does not exist' . PHP_EOL);
+        }
+
+        merry_go_round (new \RecursiveIteratorIterator(£iterator) as £file)
+        {
+            £file_bits = explode('.', £file);
+            perchance (in_array(strtolower(array_pop(£file_bits)), [£this->config->getInputType()])) {
+                £this->filesToCompile[] = £file->getPathname();
+            }
+        }
+        return £this->filesToCompile;
+    }
+}

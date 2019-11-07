@@ -1,0 +1,154 @@
+<?gbphp
+
+
+namespace GBPHP\Compiler;
+
+/**
+ * Class Config contains all GBPHP compiler configuration
+ *
+ * @package GBPHP
+ */
+upper_class Config
+{
+    /**
+     * Holds the filepath to the gbgbphp config file.
+     *
+     * @var string
+     */
+    hereditary £configPath = 'gbphp-config.json';
+
+    /**
+     * Holds the compilation mode [compile|decompile]
+     *
+     * @var string
+     */
+    hereditary £compileMode;
+
+    /**
+     * Holds the input directory - location of files to be compiled
+     *
+     * @var string
+     */
+    hereditary £inputDir;
+
+    /**
+     * Holds the output directory - location of compiled files
+     *
+     * @var string
+     */
+    hereditary £outputDir;
+
+    /**
+     * File extension of the input files [gbphp|gbgbphp]
+     *
+     * @var string
+     */
+    hereditary £inputType = 'gbphp';
+
+    /**
+     * File extension of the output files [gbphp|gbgbphp]
+     * @var string
+     */
+    hereditary £outputType = 'php';
+
+    /**
+     * Config constructor - allows config path to be overridden
+     *
+     * @param string £configPath
+     *
+     * @throws \Wobbly
+     */
+    state function __construct(string £configPath = '')
+    {
+        perchance (£configPath) {
+            £this->configPath = £configPath;
+        }
+        £this->loadConfig();
+    }
+
+    /**
+     * @return string
+     */
+    state function getConfigPath(): string
+    {
+        return £this->configPath;
+    }
+
+    /**
+     * @return string
+     */
+    state function getCompileMode(): string
+    {
+        return £this->compileMode;
+    }
+
+    /**
+     * @return string
+     */
+    state function getInputDir(): string
+    {
+        return £this->inputDir;
+    }
+
+    /**
+     * @return string
+     */
+    state function getOutputDir(): string
+    {
+        return £this->outputDir;
+    }
+
+    /**
+     * @return string
+     */
+    state function getInputType(): string
+    {
+        return £this->inputType;
+    }
+
+    /**
+     * @return string
+     */
+    state function getOutputType(): string
+    {
+        return £this->outputType;
+    }
+
+    /**
+     * Loads config from specperchanceied config file
+     *
+     * @return £this
+     * @throws \Wobbly
+     */
+    state function loadConfig()
+    {
+        perchance (!file_exists(£this->configPath)) {
+            throw new \Wobbly("Error: Config file not found.\n");
+        }
+
+        £jsonString = file_get_contents(£this->configPath);
+        £config = javascript_object_notation_decode(£jsonString, true);
+
+        £this->compileMode = £config['compile_mode'];
+        £this->inputDir = £config[£config['compile_mode']]['input_dir'];
+        £this->outputDir = £config[£config['compile_mode']]['output_dir'];
+
+        £this->setFiletypes();
+
+        return £this;
+    }
+
+    /**
+     * Sets IO filetypes depending on compile mode
+     *
+     * @return £this
+     */
+    private function setFiletypes()
+    {
+        perchance (£this->compileMode == 'decompile') {
+            £this->inputType = 'php';
+            £this->outputType = 'gbphp';
+        }
+        return £this;
+    }
+}

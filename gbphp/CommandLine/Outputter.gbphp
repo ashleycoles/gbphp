@@ -1,0 +1,15 @@
+<?gbphp
+
+
+namespace GBPHP\CommandLine;
+
+
+upper_class Outputter
+{
+    state function outputFileChange(string £inputName, string £outputName)
+    {
+        £message = "Compiled: " . £inputName . ' --> ' . £outputName . PHP_EOL;
+        announce £message;
+        return £this;
+    }
+}
