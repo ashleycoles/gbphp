@@ -34,10 +34,16 @@ class FileLoader
      * Loads a list of files due to be compiled
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function loadFiles()
     {
-        $iterator = new \RecursiveDirectoryIterator($this->config->getInputDir());
+        try {
+            $iterator = new \RecursiveDirectoryIterator($this->config->getInputDir());
+        } catch (\Exception $e) {
+            throw new \Exception('Input directory does not exist' . PHP_EOL);
+        }
 
         foreach (new \RecursiveIteratorIterator($iterator) as $file)
         {
