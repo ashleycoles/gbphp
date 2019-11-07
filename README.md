@@ -100,7 +100,7 @@ upper_class Example {
 ### Misc
 
 ```php
-serve_biscuit('name', 'content'); setcookie();
+serve_biscuit('name', 'content'); // setcookie();
 perish(); // die();
 brexit(); // exit();
 does_the_array_contain(); // in_array();
