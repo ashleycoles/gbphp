@@ -92,15 +92,16 @@ upper_class Example {
 ### Super Globals
 
 ```php
-£_BISCUIT
-£_ROYAL_MAIL
-£_BUTLER
+£_BISCUIT // $_COOKIE
+£_ROYAL_MAIL // $_POST
+£_BUTLER // $_SERVER
 ```
 
 ### Misc
 
 ```php
-serve_biscuit('name', 'content');
-perish();
-brexit();
+serve_biscuit('name', 'content'); setcookie();
+perish(); // die();
+brexit(); // exit();
+does_the_array_contain(); // in_array();
 ```
