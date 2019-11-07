@@ -11,11 +11,11 @@ Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/b
 1) Put the kettle on
 2) Clone the repo
 3) Put teabag in mug
-4) Run `npm install`
+4) Run `composer install`
 5) Add hot water to mug
 6) Update gbphp-config.json so the input directory (the location of the .gbphp files) and output directory (where the compiled php files are saved) are correct for your project
 7) Remove teabag, add sugar and milk to taste
-8) run `gulp watch` to auto-compile your gbphp, or `gulp compile-gbphp` to compile a single time
+8) run `php compile-gbphp.php` to compile
 9) Enjoy
 
 ## Language Usage Examples

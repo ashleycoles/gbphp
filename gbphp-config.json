@@ -1,8 +1,8 @@
 {
-  "compile_mode": "decompile",
+  "compile_mode": "compile",
   "compile": {
-    "input_dir": "empire",
-    "output_dir": "app"
+    "input_dir": "gbphp",
+    "output_dir": "php"
   },
   "decompile": {
     "input_dir": "php",
