@@ -38,7 +38,7 @@ Inspired by Dave Childs article [If PHP Were British](https://aloneonahill.com/b
 ### If statements
 
 ```php
-perchance ($name == 'Ash') {
+perchance (£name == 'Ash') {
     announce 'Hi' . £name;
 } otherwise {
     announce 'Who are you??';
